@@ -46,7 +46,7 @@ jobs:
 
       # Cache .m2/repository
       - name: Cache local Maven repository
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         continue-on-error: true
         with:
           path: ~/.m2/repository
@@ -71,7 +71,7 @@ jobs:
         uses: ./.github/actions/thread-dump-jvms
         if: cancelled()
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: target-${{ matrix.setup }}
