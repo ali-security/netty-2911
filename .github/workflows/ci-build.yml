@@ -17,7 +17,7 @@ name: Build project
 
 on:
   push:
-    branches: [ "main"]
+    # branches: [ "main"]
 
 
   # Allows you to run this workflow manually from the Actions tab
@@ -33,6 +33,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         include:
           - setup: linux-x86_64-java11
@@ -70,10 +71,12 @@ jobs:
         uses: ./.github/actions/thread-dump-jvms
         if: cancelled()
 
-      - uses: actions/upload-artifact@v3
-        if: ${{ failure() }}
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() }}
         with:
-          name: target
+          name: target-${{ matrix.setup }}
           path: |
             **/target/surefire-reports/
             **/hs_err*.log
+            **/target/*.jar
+            build.output

@@ -16,8 +16,8 @@
 name: Deploy project
 
 on:
-  push:
-    branches: [ "4.1" ]
+  # push:
+  #   branches: [ "4.1" ]
 
 
   # Allows you to run this workflow manually from the Actions tab
@@ -32,6 +32,7 @@ jobs:
   stage-snapshot:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         include:
           - setup: linux-x86_64-java8
